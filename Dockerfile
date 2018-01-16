@@ -32,5 +32,8 @@ ADD     . /openfarm
 # Environment is passed in from the host environment, disable the warning
 RUN     touch /openfarm/config/app_environment_variables.rb
 
-CMD     ["bundle", "exec", "rails", "server", "-P", "tmp/pids/docker.pid"]
+RUN     chmod +x /openfarm/scripts/docker-up.sh
+
 EXPOSE  3000
+
+CMD     ["rm", "-f", "tmp/pids/server.pid", "&&", "bundle", "exec", "rails", "server", "-b", "'0.0.0.0'", "-P", "tmp/pids/docker.pid"]
